@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #adventureBox {
+            height: 200px;
+            width: 400px;
+            background-color: #0C800C;
+            float:left;
+        }
+        #miningAndSmelting {
+            background-color: #8a4525;
+            width: 460px;
+            height: 165px;
+            float: right;
+        }
+        table, th, td {
+            border: 1px solid white;
+        }
+        #Crafting {
+            background-color: #8a4525;
+            margin-top: 10px;
+            float:  right;
+            height: 163px;
+            width: 261px;
+        }
+    </style>
+    <title>Wizard of Light</title>
+</head>
+<body>
+<div id="adventureBox">
+    <button onclick="start()" style="margin: 5px; float: right;">Begin Adventure!</button>
+    <table style="border: 1px solid black;float: left;">
+        <tr><td style="border: 1px solid black;"><p>HP :</p></td><td style="border: 1px solid black;"><p id="DisplayHitPoints" style="color:deepskyblue;"></p></td></tr>
+        <tr><td style="border: 1px solid black;"><p>Level :</p></td><td style="border: 1px solid black;"><p id="DisplayLevel" style="color:deepskyblue;"></p></td></tr>
+    </table>
+    <table style="border: 1px solid black;float: left; margin-left: 10px; margin-top: 10px;">
+        <tr><td style="border: 1px solid black;"><p>Enemy HP :</p></td><td style="border: 1px solid black;"><p id="DisplayEnemyHP" style="color:red;"></p></td></tr>
+    </table>
+    <br><br><br>
+    <p>You are a wizard named John!<br>Your quest is to slay the final boss; the dragon overlord.<br>Ingots cost 1 ore.<br>Armor costs 12 ingots.<br>You can benifit from all armors all at once.<br></p>
+</div>
+<div id="miningAndSmelting">
+    <table>
+        <tr><th style="color: white;">Level Required</th><th style="color: white;">Mine Ore</th><th style="color: white;">Total Ore</th><th style="color: white;">Smelt Ore</th><th style="color: white;">Total Ingots</th></tr>
+        <tr><td style="color: white;">1</td><td><button onclick="funMineCopper()">Mine Copper</button></td><td id="DisplayCopperOre" style="color:white;"></td><td><button onclick="funSmeltCopper()">Copper</button></td><td id="DisplayCopperIngots" style="color:white;"></td></tr>
+        <tr><td style="color: white;">3</td><td><button onclick="funMineIron()">Mine Iron</button></td><td id="DisplayIronOre" style="color:white;"></td><td><button onclick="funSmeltIron()">Iron</button></td><td id="DisplayIronIngots" style="color:white;"></td></tr>
+        <tr><td style="color: white;">5</td><td><button onclick="funMinePlatinum()">Mine Platinum</button></td><td id="DisplayPlatinumOre" style="color:white;"></td><td><button onclick="funSmeltPlatinum()">Platinum</button></td><td id="DisplayPlatinumIngots" style="color:white;"></td></tr>
+        <tr><td style="color: white;">10</td><td><button onclick="funMineMithral()">Mine Mithral</button></td><td id="DisplayMithralOre" style="color:white;"></td><td><button onclick="funSmeltMithral()">Mithral</button></td><td id="DisplayMithralIngots" style="color:white;"></td></tr>
+        <tr><td style="color: white;">20</td><td><button onclick="funMineTitanium()">Mine Titanium</button></td><td id="DisplayTitaniumOre" style="color:white;"></td><td><button onclick="funSmeltTitanium()">Titanium</button></td><td id="DisplayTitaniumIngots" style="color:white;"></td></tr>
+    </table>
+</div>
+<div id="Crafting">
+    <table>
+        <tr><th style="color: white;">CRAFT ARMOR</th><th style="color: white;">T/F</th></tr>
+        <tr><td><button onclick="funCraftCopperArmor()">Copper</button></td><td id="DisplayCopperArmor" style="color: white;"></td></tr>
+        <tr><td><button onclick="funCraftIronArmor()">Iron</button></td><td id="DisplayIronArmor" style="color: white;"></td></tr>
+        <tr><td><button onclick="funCraftPlatinumArmor()">Platinum</button></td><td id="DisplayPlatinumArmor" style="color: white;"></td></tr>
+        <tr><td><button onclick="funCraftMithralArmor()">Mithral</button></td><td id="DisplayMithralArmor" style="color: white;"></td></tr>
+        <tr><td><button onclick="funCraftTitaniumArmor()">Titanium</button></td><td id="DisplayTitaniumArmor" style="color: white;"></td></tr>
+    </table>
+</div>
+<script>
+    //Dynamic variable updater.
+    setInterval(function(){
+        //Armor
+        dCopperArmor = copperArmor.valueOf();
+        document.getElementById("DisplayCopperArmor").innerHTML = dCopperArmor;
+        dIronArmor = ironArmor.valueOf();
+        document.getElementById("DisplayIronArmor").innerHTML = dIronArmor;
+        dPlatinumArmor = platinumArmor.valueOf();
+        document.getElementById("DisplayPlatinumArmor").innerHTML = dPlatinumArmor;
+        dMithralArmor = mithralArmor.valueOf();
+        document.getElementById("DisplayMithralArmor").innerHTML = dMithralArmor;
+        dTitaniumArmor = titaniumArmor.valueOf();
+        document.getElementById("DisplayTitaniumArmor").innerHTML = dTitaniumArmor;
+        //Enemy HP
+        dEnemyHitPoints = enemyHitPoints.valueOf();
+        document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+        //character level, HP, and Mana
+        dHitPoints = hitPoints.valueOf();
+        document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+        dLevel = level.valueOf();
+        document.getElementById("DisplayLevel").innerHTML = dLevel;
+        //Ores
+        dCopperOre = copperOre.valueOf();
+        document.getElementById("DisplayCopperOre").innerHTML = dCopperOre;
+        dIronOre = ironOre.valueOf();
+        document.getElementById("DisplayIronOre").innerHTML = dIronOre;
+        dPlatinumOre = platinumOre.valueOf();
+        document.getElementById("DisplayPlatinumOre").innerHTML = dPlatinumOre;
+        dMithralOre = mithralOre.valueOf();
+        document.getElementById("DisplayMithralOre").innerHTML = dMithralOre;
+        dTitaniumOre = titaniumOre.valueOf();
+        document.getElementById("DisplayTitaniumOre").innerHTML = dTitaniumOre;
+        //Ingots
+        dCopperIngots = copperIngots.valueOf();
+        document.getElementById("DisplayCopperIngots").innerHTML = dCopperIngots;
+        dIronIngots = ironIngots.valueOf();
+        document.getElementById("DisplayIronIngots").innerHTML = dIronIngots;
+        dPlatinumIngots = platinumIngots.valueOf();
+        document.getElementById("DisplayPlatinumIngots").innerHTML = dPlatinumIngots;
+        dMithralIngots = mithralIngots.valueOf();
+        document.getElementById("DisplayMithralIngots").innerHTML = dMithralIngots;
+        dTitaniumIngots = titaniumIngots.valueOf();
+        document.getElementById("DisplayTitaniumIngots").innerHTML = dTitaniumIngots;
+        //Checking to see if level up!
+        if (XP >= level) {
+            XP = 0;
+            level += 1;
+            confirm("Level up!");
+        }
+    }, 200);
+    //Declaring variables that will update the player can change.
+    var level = 1;
+    var dLevel = level.valueOf();
+    var hitPoints = 30;
+    var dHitPoints= hitPoints.valueOf();
+    var enemyHitPoints = 0;
+    var dEnemyHitPoints = enemyHitPoints.valueOf();
+    //ores
+    var copperOre = 0;
+    var dCopperOre = copperOre.valueOf();
+    var ironOre = 0;
+    var dIronOre= ironOre.valueOf();
+    var platinumOre = 0;
+    var dPlatinumOre = platinumOre.valueOf();
+    var mithralOre = 0;
+    var dMithralOre= mithralOre.valueOf();
+    var titaniumOre = 0;
+    var dTitaniumOre = titaniumOre.valueOf();
+    //ingots
+    var copperIngots = 0;
+    var dCopperIngots = copperIngots.valueOf();
+    var ironIngots = 0;
+    var dIronIngots= ironIngots.valueOf();
+    var platinumIngots = 0;
+    var dPlatinumIngots = platinumIngots.valueOf();
+    var mithralIngots = 0;
+    var dMithralIngots= mithralIngots.valueOf();
+    var titaniumIngots = 0;
+    var dTitaniumIngots = titaniumIngots.valueOf();
+    //Declaring variables that won't be seen by player.
+    var XP = 0;
+    var attack = "FIREBALL";
+    //declaring adventure type
+    var adventureType = 0;
+    //Starting adventure button.
+    function start() {
+        hitPoints = level * 20 + 10 + (copperArmor * 5) + (ironArmor * 5) + (platinumArmor * 10) + (mithralArmor * 10) + (titaniumArmor * 15);
+        dHitPoints = hitPoints.valueOf();
+        document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+        var direction = prompt("Where would you like to go? (Options: HUNTING, DUNGEON, TEMPLE, DRAGONLAIR, FINALBOSS)(Default: HUNTING)");
+        switch(direction) {
+            case "HUNTING":
+                confirm("You go hunting.");
+                funHunting();
+                adventureType = 1;
+                break;
+            case "DUNGEON":
+                confirm("You go into a dungeon.");
+                funDungeon();
+                adventureType = 2;
+                break;
+            case "TEMPLE":
+                confirm("You go temple raiding.");
+                funTemple();
+                adventureType = 3;
+                break;
+            case "DRAGONLAIR":
+                confirm("You go off to find a dragon's lair.");
+                funDragonLair();
+                adventureType = 4;
+                break;
+            case "FINALBOSS":
+                confirm("You set off to your quite possible doom.");
+                funFinalBoss();
+                adventureType = 5;
+                break;
+            default:
+                confirm("You go hunting.");
+                funHunting();
+                adventureType = 1;
+        }
+    }
+    //Enemy Creation
+    function funHuntingEnemy() {
+        enemyHitPoints = Math.floor((Math.random() * 10)) + level + 2;
+        dEnemyHitPoints = enemyHitPoints.valueOf();
+        document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+    }
+    function funDungeonEnemy() {
+        enemyHitPoints = Math.floor((Math.random() * 20)) + level + 5;
+        dEnemyHitPoints = enemyHitPoints.valueOf();
+        document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+    }
+    function funTempleEnemy() {
+        enemyHitPoints = Math.floor((Math.random() * 40)) + level + 12;
+        dEnemyHitPoints = enemyHitPoints.valueOf();
+        document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+    }
+    function funDragonEnemy() {
+        enemyHitPoints = Math.floor((Math.random() * 50)) + level * 2 + 10;
+        dEnemyHitPoints = enemyHitPoints.valueOf();
+        document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+    }
+    function funFinalBoss() {
+        enemyHitPoints = 300;
+        dEnemyHitPoints = enemyHitPoints.valueOf();
+        document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+        funEnterRounds();
+    }
+    //Combat creation
+    function funHunting() {
+        funHuntingEnemy();
+        funEnterRounds();
+    }
+    function funDungeon() {
+        funDungeonEnemy();
+        funEnterRounds();
+    }
+    function funTemple() {
+        funTempleEnemy();
+        funEnterRounds();
+    }
+    function funDragonLair() {
+        funDragonEnemy();
+        funEnterRounds();
+    }
+    //COMBAT!!!!!
+    function funEnterRounds() {
+        attack = prompt("Your Attack! (options: FIREBALL, SHADOWBOLT, SWORD, FLAMESTRIKE, FIREBOLT)");
+        switch(attack) {
+            case "SHADOWBOLT":
+                if (Math.random()*100 + 1 <= 66) {
+                    confirm("You hit with your shadowbolt!");
+                    enemyHitPoints = enemyHitPoints - (Math.floor(Math.random() * 5) + 3 + level);
+                    dEnemyHitPoints = enemyHitPoints.valueOf();
+                    document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+                }
+                else{
+                    confirm("You missed with your shadowbolt!")
+                }
+                break;
+            case "FIREBOLT":
+                if (Math.random()*100 + 1 <= 35) {
+                    confirm("You hit with your firebolt!");
+                    enemyHitPoints = enemyHitPoints - (Math.floor(Math.random() * 5)  + 3 * level);
+                    dEnemyHitPoints = enemyHitPoints.valueOf();
+                    document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+                }
+                else{
+                    confirm("You missed with your firebolt!")
+                }
+                break;
+            case "SWORD":
+                if (Math.random()*100 + 1 <= 50) {
+                    confirm("You hit with your sword!");
+                    enemyHitPoints = enemyHitPoints - (Math.floor(level * 1.5) + 6 + Math.floor(Math.random() * 8));
+                    dEnemyHitPoints = enemyHitPoints.valueOf();
+                    document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+                }
+                else{
+                    confirm("You missed with your sword!!")
+                }
+                break;
+            case "FLAMESTRIKE":
+                if (Math.random()*100 + 1 <= 15) {
+                    confirm("You hit with your flamestrike!");
+                    enemyHitPoints = enemyHitPoints - (Math.floor((Math.random() * 50)) + level * 7 + 20);
+                    dEnemyHitPoints = enemyHitPoints.valueOf();
+                    document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+                }
+                else{
+                    confirm("You missed with your flamestrike!")
+                }
+                break;
+            case "FIREBALL":
+                confirm("You hit with your fireball!");
+                enemyHitPoints = enemyHitPoints - (Math.floor(Math.random() * 4) + 1 + Math.floor(level * 0.5));
+                dEnemyHitPoints = enemyHitPoints.valueOf();
+                document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+                break;
+            default:
+                confirm("You hit with your fireball!");
+                enemyHitPoints = enemyHitPoints - (Math.floor(Math.random() * 4) + 1 + Math.floor(level * 0.5));
+                dEnemyHitPoints = enemyHitPoints.valueOf();
+                document.getElementById("DisplayEnemyHP").innerHTML = dEnemyHitPoints;
+        }
+        if (enemyHitPoints <= 0) {
+            switch(adventureType) {
+                case 1:
+                    confirm("You have slain the monster!");
+                    XP = XP + 1;
+                    break;
+                case 2:
+                    confirm("You have slain the monster!");
+                    XP = XP + 2;
+                    break;
+                case 3:
+                    confirm("You have slain the monster!");
+                    XP = XP + 4;
+                    break;
+                case 4:
+                    confirm("You have slain the dragon!");
+                    XP = XP + 8;
+                    break;
+                case 5:
+                    confirm("VICTORY IS YOURS!");
+                    break;
+                default:
+                    confirm("You have slain the monster!");
+                    hitPoints = level * 20 + 10 + (copperArmor * 5) + (ironArmor * 5) + (platinumArmor * 10) + (mithralArmor * 10) + (titaniumArmor * 15);
+                    dHitPoints = hitPoints.valueOf();
+                    document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+                    XP = XP + 1;
+                    break;
+            }
+        }
+        else {
+            switch(adventureType) {
+                case 1:
+                    if (Math.random() * 100 <= 30) {
+                        confirm("The enemy hit you!");
+                        hitPoints = hitPoints - (Math.floor(Math.random() * 3) + 2);
+                        dHitPoints = hitPoints.valueOf();
+                        document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+                    }
+                    else {
+                        confirm("The enemy missed you!")
+                    }
+                    break;
+                case 2:
+                    if (Math.random() * 100 <= 40) {
+                        confirm("The enemy hit you!");
+                        hitPoints = hitPoints - (5 + Math.floor(Math.random() * 6));
+                        dHitPoints = hitPoints.valueOf();
+                        document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+                    }
+                    else {
+                        confirm("The enemy missed you!")
+                    }
+                    break;
+                case 3:
+                    if (Math.random() * 100 <= 50) {
+                        confirm("The enemy hit you!");
+                        hitPoints = hitPoints - (4 + Math.floor(Math.random() * 12));
+                        dHitPoints = hitPoints.valueOf();
+                        document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+                    }
+                    else {
+                        confirm("The enemy missed you!")
+                    }
+                    break;
+                case 4:
+                    if (Math.random() * 100 <= 65) {
+                        confirm("The dragon hit you!");
+                        hitPoints = hitPoints - (5 + Math.floor(level * 1.5) + Math.floor(Math.random() * 11));
+                        dHitPoints = hitPoints.valueOf();
+                        document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+                    }
+                    else {
+                        confirm("The dragon missed you!")
+                    }
+                    break;
+                case 5:
+                    if (Math.random() * 100 <= 90) {
+                        confirm("The Final Boss hit you!");
+                        hitPoints = hitPoints - (10 + Math.floor(Math.random() * 11));
+                        dHitPoints = hitPoints.valueOf();
+                        document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+                    }
+                    else {
+                        confirm("The Final Boss missed you!")
+                    }
+                    break;
+                default:
+                    if (Math.random() * 100 <= 50) {
+                        confirm("The enemy hit you!");
+                        hitPoints = hitPoints - (Math.floor(Math.random() * 12) + 4);
+                        dHitPoints = hitPoints.valueOf();
+                        document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+                    }
+                    else {
+                        confirm("The enemy missed you!")
+                    }
+            }
+        }
+        if (hitPoints > 0) {
+            if (enemyHitPoints > 0) {
+                funEnterRounds();
+            }
+            else {
+                confirm("You have slain the enemy!");
+                hitPoints = level * 20 + 10 + (copperArmor * 5) + (ironArmor * 5) + (platinumArmor * 10) + (mithralArmor * 10) + (titaniumArmor * 15);
+                dHitPoints = hitPoints.valueOf();
+                document.getElementById("DisplayHitPoints").innerHTML = dHitPoints;
+            }
+        }
+        else {
+            confirm("You have perished.");
+            document.write("Your body will forever lay and rot away where you died.");
+        }
+    }
+    //Mining
+    function funMineCopper() {
+        if (level >= 1) {
+            copperOre = copperOre + 1;
+            dCopperOre = copperOre.valueOf();
+            document.getElementById("DisplayCopperOre").innerHTML = dCopperOre;
+        }
+        else{
+            confirm("Your level isn't high enough.")
+        }
+    }
+    function funMineIron() {
+        if (level >= 3) {
+            ironOre += 1;
+            dIronOre = ironOre.valueOf();
+            document.getElementById("DisplayIronOre").innerHTML = dIronOre;
+        }
+        else{
+            confirm("Your level isn't high enough.")
+        }
+    }
+    function funMinePlatinum() {
+        if (level >= 5) {
+            platinumOre += 1;
+            dPlatinumOre = platinumOre.valueOf();
+            document.getElementById("DisplayPlatinumOre").innerHTML = dPlatinumOre;
+        }
+        else{
+            confirm("Your level isn't high enough.")
+        }
+    }
+    function funMineMithral() {
+        if (level >= 10) {
+            mithralOre += 1;
+            dMithralOre = mithralOre.valueOf();
+            document.getElementById("DisplayMithralOre").innerHTML = dMithralOre;
+        }
+        else{
+            confirm("Your level isn't high enough.")
+        }
+    }
+    function funMineTitanium() {
+        if (level >= 20) {
+            titaniumOre += 1;
+            dTitaniumOre = titaniumOre.valueOf();
+            document.getElementById("DisplayTitaniumOre").innerHTML = dTitaniumOre;
+        }
+        else{
+            confirm("Your level isn't high enough.")
+        }
+    }
+    //Smelting
+    function funSmeltCopper() {
+        if (copperOre >= 1) {
+            copperOre = copperOre - 1;
+            copperIngots =  copperIngots + 1;
+            dCopperOre = copperOre.valueOf();
+            document.getElementById("DisplayCopperOre").innerHTML = dCopperOre;
+            dCopperIngots = copperIngots.valueOf();
+            document.getElementById("DisplayCopperIngots").innerHTML = dCopperIngots;
+        }
+        else{
+            confirm("You don't have any copper ore to smelt!")
+        }
+    }
+    function funSmeltIron() {
+        if (ironOre >= 1) {
+            ironOre = ironOre - 1;
+            ironIngots =  ironIngots + 1;
+            dIronOre = ironOre.valueOf();
+            document.getElementById("DisplayIronOre").innerHTML = dIronOre;
+            dIronIngots = ironIngots.valueOf();
+            document.getElementById("DisplayIronIngots").innerHTML = dIronIngots;
+        }
+        else{
+            confirm("You don't have any iron ore to smelt!")
+        }
+    }
+    function funSmeltPlatinum() {
+        if (platinumOre >= 1) {
+            platinumOre = platinumOre - 1;
+            platinumIngots =  platinumIngots + 1;
+            dPlatinumOre = platinumOre.valueOf();
+            document.getElementById("DisplayPlatinumOre").innerHTML = dPlatinumOre;
+            dPlatinumIngots = platinumIngots.valueOf();
+            document.getElementById("DisplayPlatinumIngots").innerHTML = dPlatinumIngots;
+        }
+        else{
+            confirm("You don't have any platinum ore to smelt!")
+        }
+    }
+    function funSmeltMithral() {
+        if (mithralOre >= 1) {
+            mithralOre = mithralOre - 1;
+            mithralIngots =  mithralIngots + 1;
+            dMithralOre = mithralOre.valueOf();
+            document.getElementById("DisplayMithralOre").innerHTML = dMithralOre;
+            dMithralIngots = mithralIngots.valueOf();
+            document.getElementById("DisplayMithralIngots").innerHTML = dMithralIngots;
+        }
+        else{
+            confirm("You don't have any mithral ore to smelt!")
+        }
+    }
+    function funSmeltTitanium() {
+        if (titaniumOre >= 1) {
+            titaniumOre = titaniumOre - 1;
+            titaniumIngots =  titaniumIngots + 1;
+            dTitaniumOre = titaniumOre.valueOf();
+            document.getElementById("DisplayTitaniumOre").innerHTML = dTitaniumOre;
+            dTitaniumIngots = titaniumIngots.valueOf();
+            document.getElementById("DisplayTitaniumIngots").innerHTML = dTitaniumIngots;
+        }
+        else{
+            confirm("You don't have any titanium ore to smelt!")
+        }
+    }
+    //Armor variables
+    var copperArmor = 0;
+    var ironArmor = 0;
+    var platinumArmor = 0;
+    var mithralArmor = 0;
+    var titaniumArmor = 0;
+    var dCopperArmor = copperArmor.valueOf();
+    var dIronArmor = ironArmor.valueOf();
+    var dPlatinumArmor = platinumArmor.valueOf();
+    var dMithralArmor = mithralArmor.valueOf();
+    var dTitaniumArmor = titaniumArmor.valueOf();
+    //Crafting functions
+    function funCraftCopperArmor() {
+        if (copperIngots >= 12 && copperArmor == 0){
+            copperIngots = copperIngots - 12;
+            copperArmor = 1;
+        }
+        else{
+            confirm("You either don't have enough copper ingots or you already have copper armor!")
+        }
+    }
+    function funCraftIronArmor() {
+        if (ironIngots >= 12 && ironArmor == 0){
+            ironIngots = ironIngots - 12;
+            ironArmor = 1;
+        }
+        else{
+            confirm("You either don't have enough iron ingots or you already have iron armor!")
+        }
+    }
+    function funCraftPlatinumArmor() {
+        if (platinumIngots >= 12 && platinumArmor == 0){
+            platinumIngots = platinumIngots - 12;
+            platinumArmor = 1;
+        }
+        else{
+            confirm("You either don't have enough platinum ingots or you already have platinum armor!")
+        }
+    }
+    function funCraftMithralArmor() {
+        if (mithralIngots >= 12 && mithralArmor == 0){
+            mithralIngots = mithralIngots - 12;
+            mithralArmor = 1;
+        }
+        else{
+            confirm("You either don't have enough mithral ingots or you already have mithral armor!")
+        }
+    }
+    function funCraftTitaniumArmor() {
+        if (titaniumIngots >= 12 && titaniumArmor == 0){
+            titaniumIngots = titaniumIngots - 12;
+            titaniumArmor = 1;
+        }
+        else{
+            confirm("You either don't have enough titanium ingots or you already have titanium armor!")
+        }
+    }
+</script>
+</body>
+</html>
